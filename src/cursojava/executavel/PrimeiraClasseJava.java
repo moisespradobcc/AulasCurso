@@ -7,11 +7,14 @@ import cursojava.classes.Diretor;
 import cursojava.classes.Disciplina;
 import cursojava.classes.Secretario;
 import cursojava.constantes.StatusAluno;
+import cursojava.excecao.ExcecaoProcessarNota;
 import cursojava.interfaces.PermitirAcesso;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 public class PrimeiraClasseJava {
@@ -21,7 +24,7 @@ public class PrimeiraClasseJava {
 
         try {
 
-            new File("arquivo.txt");
+            lerArquivo();
 
             String login = JOptionPane.showInputDialog("Informe o login: ");
             String senha = JOptionPane.showInputDialog("Informe a senha: ");
@@ -145,8 +148,21 @@ public class PrimeiraClasseJava {
             JOptionPane.showMessageDialog(null, "Erro de conversão de número " + saida.toString());
         } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(null, "Opa um null pointer exception " + e.getClass());
-        } catch (Exception e) {
+        } catch (ExcecaoProcessarNota e) {//Captura todas as excessões que não prevemos
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro da exceção customizada " + e.getClass().getName());
+        } finally {/*Sempre é executado ocorrendo erros ou não.*/
+ /*Sempre e usado quando se precisa executar um processo ocorrendo erro ou não no sistema*/
+            JOptionPane.showMessageDialog(null, "Obrigado por aprender java comigo");
+        }
+    }
+
+    public static void lerArquivo() throws ExcecaoProcessarNota {
+        try {
+            File fil = new File("c://lines.txt");
+            Scanner scanner = new Scanner(fil);
+        } catch (FileNotFoundException e) {
+            throw new ExcecaoProcessarNota(e.getMessage());
         }
     }
 
